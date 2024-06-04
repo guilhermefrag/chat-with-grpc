@@ -6,20 +6,25 @@ import { Message } from '../protos/proto/Message'
 import { Connect } from '../protos/proto/Connect'
 import { User } from '../protos/proto/User'
 
-const PROTO_PATH = './chat.proto'
+const PROTO_PATH = './protos/chat.proto'
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH)
 const grpcObject = (grpc.loadPackageDefinition(packageDefinition) as unknown) as ProtoGrpcType
 const broadcastPackage = grpcObject.proto
 
-const client = new broadcastPackage.Broadcast('localhost:50051', grpc.credentials.createInsecure())
+const client = new broadcastPackage.Broadcast('localhost:8082', grpc.credentials.createInsecure())
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 })
 
-const user: User = { id: 1, name: 'User1' }
+let user: User
+
+rl.question('Enter your username: ', (username) => {
+  user = { id: Date.now(), name: username }
+  start()
+})
 
 function start() {
   const connect: Connect = { user, active: true }
@@ -42,5 +47,3 @@ function start() {
     console.log('Connection ended.')
   })
 }
-
-start()

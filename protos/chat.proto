@@ -3,24 +3,24 @@ syntax = "proto3";
 package proto;
 
 message User {
-    string id = 1;
-    string name = 2;
+  string id = 1;
+  string name = 2;
 }
 
 message Message {
-    string id = 1;
-    string content = 2;
-    string timestamp = 3;
+  string id = 1;
+  string content = 2;
+  string timestamp = 3;
 }
 
 message Connect {
-    User user = 1;
-    bool active = 2;
+  User user = 1;
+  bool active = 2;
 }
 
-message Empty {}
+message Close {}
 
 service Broadcast {
-    rpc CreateStream(Connect) returns (stream Message);
-    rpc BroadcastMessage(Message) returns (Empty);
+  rpc CreateStream(Connect) returns (stream Message);
+  rpc BroadcastMessage(Message) returns (Close);
 }
