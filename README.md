@@ -15,7 +15,7 @@ Se não quiser usar o Docker e tiver o Node 21+ instalado é só rodar os comand
 ```zsh
 npm install
 
-npm run start & npm run web-socket
+pm2-runtime start ecosystem.config.js
 ```
 
 Após rodar o projeto, rode o front-end:
